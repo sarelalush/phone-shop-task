@@ -1,6 +1,6 @@
 class Sale:
 
-    def __init__(self,manufacturer,model,price,quantity,date_of_purchase,discount = 0):
+    def __init__(self, manufacturer, model, price, quantity, date_of_purchase, discount=0):
         self.manufacturer = manufacturer
         self.model = model
         self.price = int(price)
@@ -9,4 +9,4 @@ class Sale:
         self.discount = discount
 
     def toString(self):
-        return (self.manufacturer,self.model,self.price,self.quantity,self.date_of_purchase,self.discount)
+        return self.manufacturer, self.model, self.price, self.quantity, self.date_of_purchase, self.discount

@@ -2,7 +2,7 @@ from PhoneClass import *
 from SaleClass import *
 
 
-#create new Phone
+# create new Phone
 def createPhone():
     manufacturer = input("Manufacturer : ")
     model = input("Model : ")
@@ -11,14 +11,15 @@ def createPhone():
     imei = input("IMEI : ")
     warranty = input("Warranty : ")
 
-    return Phone(manufacturer,model,price,quantity,imei,warranty)
+    return Phone(manufacturer, model, price, quantity, imei, warranty)
 
 
 def choose_for_update_quantity():
     manufacturer = input("Manufacturer : ")
     model = input("Model : ")
     quantity = input("Quantity : ")
-    return (manufacturer , model , quantity)
+    return manufacturer, model, quantity
+
 
 def create_new_sale():
     manufacturer = input("Manufacturer : ")
@@ -28,11 +29,11 @@ def create_new_sale():
     date_of_purchase = input("Date : ")
     return Sale(manufacturer, model, price, quantity, date_of_purchase)
 
-def getDate():
-    date = input("Start date to serach : ")
-    toDate = input("End date to serach : ")
-    return (date,toDate)
 
+def getDate():
+    date = input("Start date to search : ")
+    to_date = input("End date to search : ")
+    return date, to_date
 
 
 def phone_store_menu():
@@ -44,4 +45,4 @@ def phone_store_menu():
     print("- Print all phone in the stock press 4              -")
     print("- Print total amount of sales between dates press 5 -")
     print("-----------------------------------------------------")
-    return input("Your selction: ")
+    return input("Your selection: ")

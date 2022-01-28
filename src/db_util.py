@@ -6,8 +6,6 @@ import os.path
 import src.conf as conf
 
 
-
-
 def create_db():
     if os.path.isfile(conf.DB_NAME):
         print("Database exist, skip create")
@@ -28,8 +26,8 @@ def load_raw_data(conn):
                     f"INSERT INTO {key} VALUES({records[key][item]})"
                 )
                 conn.commit()
-                
-                
+
+
 def select_all_by_table(conn, table_name):
     print(f"\nAll data in table:{table_name}")
     cur = conn.cursor()
@@ -38,47 +36,60 @@ def select_all_by_table(conn, table_name):
     for row in rows:
         print(row)
 
-def add_new_phone(conn , newPhone):
+
+def add_new_phone(conn, new_phone):
     cur = conn.cursor()
-    quantity = check_phone_exist(conn , newPhone.manufacturer , newPhone.model)
+    quantity = check_phone_exist(conn, new_phone.manufacturer, new_phone.model)
     if not quantity:
-        cur.execute(f"INSERT INTO {conf.PHONE_TABLE} VALUES(?,?,?,?,?,?)", (newPhone.manufacturer,newPhone.model,newPhone.price,newPhone.quantity,newPhone.imei,newPhone.warranty))
+        cur.execute(f"INSERT INTO {conf.PHONE_TABLE} VALUES(?,?,?,?,?,?)", (
+            new_phone.manufacturer, new_phone.model, new_phone.price,
+            new_phone.quantity, new_phone.imei, new_phone.warranty))
+
         conn.commit()
     else:
-        update_phone_quantity(conn ,quantity+1,newPhone.imei)
+        update_phone_quantity(conn, quantity + new_phone.quantity, new_phone.manufacturer, new_phone.model)
 
-def update_phone_quantity(conn , quantity , manufacturer , model):
+
+def update_phone_quantity(conn, quantity, manufacturer, model):
     cur = conn.cursor()
-    cur.execute(f"UPDATE {conf.PHONE_TABLE} SET quantity = ? WHERE manufacturer = ? AND model = ?" ,(quantity , manufacturer , model))
+    cur.execute(f"UPDATE {conf.PHONE_TABLE} SET quantity = ? WHERE manufacturer = ? AND model = ?",
+                (quantity, manufacturer, model))
     conn.commit()
 
-def add_new_sale(conn , newSale):
+
+def add_new_sale(conn, new_sale):
     cur = conn.cursor()
-    quantity = check_phone_exist(conn , newSale.manufacturer,newSale.model)
-    discount = newSale.price / get_phone_price(conn,newSale.manufacturer,newSale.model) * 100
-    if quantity >= newSale.quantity:
-        cur.execute(f"INSERT INTO {conf.SALE_TABLE} VALUES (?,?,?,?,?,?)",(newSale.manufacturer,newSale.model,newSale.price,newSale.quantity,newSale.date_of_purchase,discount))
+    quantity = check_phone_exist(conn, new_sale.manufacturer, new_sale.model)
+    discount = new_sale.price / get_phone_price(conn, new_sale.manufacturer, new_sale.model) * 100
+    if quantity >= new_sale.quantity:
+        cur.execute(f"INSERT INTO {conf.SALE_TABLE} VALUES (?,?,?,?,?,?)",
+                    (new_sale.manufacturer, new_sale.model, new_sale.price,
+                     new_sale.quantity, new_sale.date_of_purchase, discount))
         conn.commit()
-        update_phone_quantity(conn , quantity-newSale.quantity ,newSale.manufacturer,newSale.model)
+        update_phone_quantity(conn, quantity - new_sale.quantity, new_sale.manufacturer, new_sale.model)
     else:
         print("Not enough in stock, try later")
+
 
 def all_phones_in_stock(conn):
     cur = conn.cursor()
     cur.execute(f"SELECT * FROM {conf.PHONE_TABLE} WHERE quantity > 0")
     rows = cur.fetchall()
     for row in rows:
-        print(f"[{row[0]}] Model-{row[1]} , Price-{row[2]} , Quentity-{row[3]}")
+        print(f"[{row[0]}] Model-{row[1]} , Price-{row[2]} , Quantity-{row[3]}")
 
-def total_amount_of_sale(conn , date , toDate):
+
+def total_amount_of_sale(conn, date, to_date):
     cur = conn.cursor()
-    cur.execute(f"SELECT * FROM {conf.SALE_TABLE} WHERE  date_of_purchase >= ? AND date_of_purchase <= ?",(date,toDate))
+    cur.execute(f"SELECT * FROM {conf.SALE_TABLE} WHERE date_of_purchase >= ? AND date_of_purchase <= ?",
+                (date, to_date))
     rows = cur.fetchall()
-    print(f"Total amount of sale between {date} to {toDate} is {len(rows)}")
+    print(f"Total amount of sale between {date} to {to_date} is {len(rows)}")
 
-#check if the phone exist in DB
-#return the quantity(if quentity = 0 the phone not exist)
-def check_phone_exist(conn , manufacturer , model):
+
+# check if the phone exist in DB
+# return the quantity(if quantity = 0 the phone not exist)
+def check_phone_exist(conn, manufacturer, model):
     cur = conn.cursor()
     cur.execute(f"SELECT * FROM {conf.PHONE_TABLE}")
     rows = cur.fetchall()
@@ -87,8 +98,9 @@ def check_phone_exist(conn , manufacturer , model):
             return int(row[3])
     return 0
 
-def get_phone_price(conn,manufacturer,model):
+
+def get_phone_price(conn, manufacturer, model):
     curr = conn.cursor()
-    curr.execute(f"SELECT price FROM {conf.PHONE_TABLE} WHERE manufacturer = ? AND model = ? " , (manufacturer ,model))
+    curr.execute(f"SELECT price FROM {conf.PHONE_TABLE} WHERE manufacturer = ? AND model = ? ", (manufacturer, model))
     rows = curr.fetchone()
     return rows[0]
