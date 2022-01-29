@@ -1,5 +1,5 @@
-from PhoneClass import *
-from SaleClass import *
+from src.PhoneClass import *
+from src.SaleClass import *
 from datetime import datetime
 
 # Fill the fields for new sale and create new phone object
@@ -15,7 +15,7 @@ def createPhone():
 
 
 # Fill the fields for quantity
-def choose_for_update_quantity():
+def update_quantity():
     manufacturer = input("Manufacturer : ")
     model = input("Model : ")
     quantity = int(input("Quantity : "))
@@ -65,5 +65,5 @@ def phone_store_menu():
         user_selection = int(input("Your selection: "))
     except ValueError as err:
         raise ValueError("Incorrect format, should be Integer")
-    
+
     return user_selection

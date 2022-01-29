@@ -15,7 +15,7 @@ def user_choosing_menu(conn):
                 case 1:
                     db_utils.add_new_phone(conn, menu.createPhone())
                 case 2:
-                    manufacturer, model, quantity = menu.choose_for_update_quantity()
+                    manufacturer, model, quantity = menu.update_quantity()
                     db_utils.update_phone_quantity(conn, quantity, manufacturer, model)
                 case 3:
                     db_utils.add_new_sale(conn, menu.create_new_sale())
