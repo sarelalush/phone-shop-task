@@ -18,7 +18,7 @@ def user_choosing_menu(conn):
                     manufacturer, model, quantity = menu.update_quantity()
                     db_utils.update_phone_quantity(conn, quantity, manufacturer, model)
                 case 3:
-                    db_utils.add_new_sale(conn, menu.create_new_sale())
+                    db_utils.add_new_sale(conn, menu.create_sale())
                 case 4:
                     db_utils.all_phones_in_stock(conn)
                 case 5:
@@ -35,11 +35,10 @@ if __name__ == '__main__':
     connection = None
     try:
         connection = db_utils.create_db()
-        # db_utils.load_raw_data(connection)
+        db_utils.load_raw_data(connection)
         db_utils.select_all_by_table(connection, conf.PHONE_TABLE)
         db_utils.select_all_by_table(connection, conf.SALE_TABLE)
         user_choosing_menu(connection)
-        db_utils.select_all_by_table(connection, conf.SALE_TABLE)
     except sqlite3.Error as e:
         print(f"Error {e.args[0]}")
         sys.exit(1)

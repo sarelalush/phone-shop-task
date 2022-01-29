@@ -9,7 +9,12 @@ def createPhone():
     price = int(input("Price : "))
     quantity = int(input("Quantity : "))
     imei = int(input("IMEI : "))
-    warranty = input("Warranty : ")
+
+    try:
+        warranty = input("Warranty : ")
+        datetime.strptime(warranty, "%d-%m-%y")
+    except ValueError:
+        raise ValueError("Incorrect data format, should be DD-MM-YYYY")
 
     return Phone(manufacturer, model, price, quantity, imei, warranty)
 
@@ -23,7 +28,7 @@ def update_quantity():
 
 
 # Fill the fields for new sale and create new sale object
-def create_new_sale():
+def create_sale():
     manufacturer = input("Manufacturer : ")
     model = input("Model : ")
     price = int(input("Price : "))
@@ -33,7 +38,7 @@ def create_new_sale():
         date_of_purchase = input("Date :")
         datetime.strptime(date_of_purchase, "%d-%m-%y")
     except ValueError:
-        raise ValueError("Incorrect data format, should be DD-MM-YYYY")
+        raise ValueError("Incorrect data format, should be DD-MM-YY")
 
     return Sale(manufacturer, model, price, quantity, date_of_purchase)
 

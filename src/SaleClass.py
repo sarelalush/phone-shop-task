@@ -10,3 +10,8 @@ class Sale:
 
     def toString(self):
         return self.manufacturer, self.model, self.price, self.quantity, self.date_of_purchase, self.discount
+
+    def equalSale(self, phone):
+        if self.manufacturer == phone.manufacturer and self.model == phone.model and self.quantity == phone.quantity:
+            return True
+        return False
