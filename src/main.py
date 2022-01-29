@@ -9,8 +9,8 @@ import menu
 
 def user_choosing_menu(conn):
     while True:
-        choose = menu.phone_store_menu()
         try:
+            choose = menu.phone_store_menu()
             match int(choose):
                 case 1:
                     db_utils.add_new_phone(conn, menu.createPhone())

@@ -60,4 +60,10 @@ def phone_store_menu():
     print("- Print all phone in the stock press 4              -")
     print("- Print total amount of sales between dates press 5 -")
     print("-----------------------------------------------------")
-    return int(input("Your selection: "))
+    user_selection = 0
+    try:
+        user_selection = int(input("Your selection: "))
+    except ValueError as err:
+        raise ValueError("Incorrect format, should be Integer")
+    
+    return user_selection
