@@ -13,7 +13,7 @@ def user_choosing_menu(conn):
             choose = menu.phone_store_menu()
             match int(choose):
                 case 1:
-                    db_utils.add_new_phone(conn, menu.createPhone())
+                    db_utils.add_new_phone(conn, menu.create_phone())
                 case 2:
                     manufacturer, model, quantity = menu.update_quantity()
                     db_utils.update_phone_quantity(conn, quantity, manufacturer, model)

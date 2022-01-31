@@ -3,7 +3,7 @@ from src.SaleClass import *
 from datetime import datetime
 
 # Fill the fields for new sale and create new phone object
-def createPhone():
+def create_phone():
     manufacturer = input("Manufacturer : ")
     model = input("Model : ")
     price = int(input("Price : "))

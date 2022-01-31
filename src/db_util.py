@@ -39,8 +39,9 @@ def select_all_by_table(conn, table_name):
 
 def add_new_phone(conn, new_phone):
     cur = conn.cursor()
-    quantity = check_phone_exist(conn, new_phone.manufacturer, new_phone.model)
-    if not quantity:
+    quantity = get_quantity(conn, new_phone.manufacturer, new_phone.model)
+
+    if not get_row_phone_data(conn,new_phone.manufacturer,new_phone.model):
         cur.execute(f"INSERT INTO {conf.PHONE_TABLE} VALUES(?,?,?,?,?,?)", (
             new_phone.manufacturer, new_phone.model, new_phone.price,
             new_phone.quantity, new_phone.imei, new_phone.warranty))
@@ -59,9 +60,9 @@ def update_phone_quantity(conn, quantity, manufacturer, model):
 
 def add_new_sale(conn, new_sale):
     cur = conn.cursor()
-    quantity = check_phone_exist(conn, new_sale.manufacturer, new_sale.model)
-    discount = new_sale.price / get_phone_price(conn, new_sale.manufacturer, new_sale.model) * 100
+    quantity = get_quantity(conn, new_sale.manufacturer, new_sale.model)
     if quantity >= new_sale.quantity:
+        discount = new_sale.price / get_phone_price(conn, new_sale.manufacturer, new_sale.model) * 100
         cur.execute(f"INSERT INTO {conf.SALE_TABLE} VALUES (?,?,?,?,?,?)",
                     (new_sale.manufacturer, new_sale.model, new_sale.price,
                      new_sale.quantity, new_sale.date_of_purchase, discount))
@@ -85,11 +86,11 @@ def total_amount_of_sale(conn, date, to_date):
                 (date, to_date))
     rows = cur.fetchall()
     print(f"Total amount of sale between {date} to {to_date} is {len(rows)}")
-
+    return len(rows)
 
 # check if the phone exist in DB
 # return the quantity(if quantity = 0 the phone not exist)
-def check_phone_exist(conn, manufacturer, model):
+def get_quantity(conn, manufacturer, model):
     cur = conn.cursor()
     cur.execute(f"SELECT * FROM {conf.PHONE_TABLE}")
     rows = cur.fetchall()
@@ -104,3 +105,17 @@ def get_phone_price(conn, manufacturer, model):
     curr.execute(f"SELECT price FROM {conf.PHONE_TABLE} WHERE manufacturer = ? AND model = ? ", (manufacturer, model))
     rows = curr.fetchone()
     return rows[0]
+
+
+def get_row_phone_data(conn, manufacturer, model):
+    curr = conn.cursor()
+    curr.execute(f"SELECT * FROM {conf.PHONE_TABLE} WHERE manufacturer = ? AND model = ? ", (manufacturer, model))
+    rows = curr.fetchone()
+    return rows
+
+def get_row_sale_data(conn, manufacturer, model):
+    curr = conn.cursor()
+    curr.execute(f"SELECT * FROM {conf.SALE_TABLE} WHERE manufacturer = ? AND model = ? ", (manufacturer, model))
+    rows = curr.fetchall()
+    return rows
+
