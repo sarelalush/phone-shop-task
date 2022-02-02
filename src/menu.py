@@ -2,6 +2,7 @@ from src.PhoneClass import *
 from src.SaleClass import *
 from datetime import datetime
 
+
 # Fill the fields for new sale and create new phone object
 def create_phone():
     manufacturer = input("Manufacturer : ")
@@ -48,7 +49,7 @@ def getDate():
     try:
         date = input("Start date to search : ")
         to_date = input("End date to search : ")
-        datetime.strptime(date,"%d-%m-%y")
+        datetime.strptime(date, "%d-%m-%y")
         datetime.strptime(to_date, "%d-%m-%y")
     except ValueError:
         raise ValueError("Incorrect data format, should be DD-MM-YYYY")
@@ -65,7 +66,6 @@ def phone_store_menu():
     print("- Print all phone in the stock press 4              -")
     print("- Print total amount of sales between dates press 5 -")
     print("-----------------------------------------------------")
-    user_selection = 0
     try:
         user_selection = int(input("Your selection: "))
     except ValueError as err:

@@ -21,7 +21,7 @@ def db():
         for table in conf.TABLES.values():
             conn.cursor().execute(table)
 
-    with open(r'raw_data.yaml') as file:
+    with open(r'../db/raw_data.yaml') as file:
         records = yaml.load(file, Loader=yaml.FullLoader)
         for key in records.keys():
             for item in records[key]:

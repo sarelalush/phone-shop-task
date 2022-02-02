@@ -8,8 +8,8 @@ phone:
   p6: "'samsung', 'Galaxy_10', 3100, 3,NULL,NULL"
   p7: "'xiaomi', 'Mi_10T_Pro', 2800, 4,NULL,NULL"
 sale:
-  s1: "'iphone', 'i10', 2300 , 1, '15-11-2020',NULL"
-  s2: "'samsung', 'Galaxy_10', 3100 , 2, '13-11-2020',NULL"
-  s3: "'one_pulse', '7', 2450, 1, '12-11-2020',NULL"
-  s4: "'one_pulse', '6', 1500, 1, '13-11-2020',NULL"
-  s5: "'xiaomi', 'Mi_10T_Pro', 2800, 1, '14-11-2020',NULL"
+  s1: "'iphone', 'i10', 2300 , 1, '20-11-15',NULL"
+  s2: "'samsung', 'Galaxy_10', 3100 , 2, '20-11-13',NULL"
+  s3: "'one_pulse', '7', 2450, 1, '20-11-12',NULL"
+  s4: "'one_pulse', '6', 1500, 1, '20-11-13',NULL"
+  s5: "'xiaomi', 'Mi_10T_Pro', 2800, 1, '20-11-14',NULL"

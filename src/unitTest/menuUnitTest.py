@@ -22,7 +22,7 @@ class MenuUnitTest(unittest.TestCase):
         send_input_to_stdin(self.phone)
         res = menu.create_phone()
         p = Phone("iphone", "12pro", "1", "2", "3", "10-10-99")
-        self.assertTrue(p.equalPhone(res))
+        self.assertTrue(p.equal_phone(res))
 
     def test_update_quantity(self):
         send_input_to_stdin(self.update_quantity)
@@ -33,7 +33,7 @@ class MenuUnitTest(unittest.TestCase):
         send_input_to_stdin(self.sale)
         res = menu.create_sale()
         s = Sale('iphone', 'i10', '2300', '1', '15-11-20')
-        self.assertTrue(s.equalSale(res))
+        self.assertTrue(s.get_all_data())
 
     def test_value_enter_wrong_field(self):
         values1 = '\n'.join(["iphone", "12pro", "1", "2", "abc", "10-12-99"])

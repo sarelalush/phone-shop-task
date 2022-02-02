@@ -11,7 +11,7 @@ class Phone:
     def get_all_data(self):
         return self.manufacturer, self.model, self.price, self.quantity, self.imei, self.warranty
 
-    def equalPhone(self, phone):
+    def equal_phone(self, phone):
         if self.manufacturer == phone.manufacturer and self.model == phone.model and self.imei == phone.imei:
             return True
         return False

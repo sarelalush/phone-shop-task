@@ -41,7 +41,7 @@ def add_new_phone(conn, new_phone):
     cur = conn.cursor()
     quantity = get_quantity(conn, new_phone.manufacturer, new_phone.model)
 
-    if not get_row_phone_data(conn,new_phone.manufacturer,new_phone.model):
+    if not get_row_phone_data(conn, new_phone.manufacturer, new_phone.model):
         cur.execute(f"INSERT INTO {conf.PHONE_TABLE} VALUES(?,?,?,?,?,?)", (
             new_phone.manufacturer, new_phone.model, new_phone.price,
             new_phone.quantity, new_phone.imei, new_phone.warranty))
@@ -88,6 +88,7 @@ def total_amount_of_sale(conn, date, to_date):
     print(f"Total amount of sale between {date} to {to_date} is {len(rows)}")
     return len(rows)
 
+
 # check if the phone exist in DB
 # return the quantity(if quantity = 0 the phone not exist)
 def get_quantity(conn, manufacturer, model):
@@ -113,9 +114,9 @@ def get_row_phone_data(conn, manufacturer, model):
     rows = curr.fetchone()
     return rows
 
+
 def get_row_sale_data(conn, manufacturer, model):
     curr = conn.cursor()
     curr.execute(f"SELECT * FROM {conf.SALE_TABLE} WHERE manufacturer = ? AND model = ? ", (manufacturer, model))
     rows = curr.fetchall()
     return rows
-
